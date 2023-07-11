@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo
+  name: myapp
   labels:
     app: myapp
 spec:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: anupam7860/myapp:latest
+        image: docker anupam7860/myapp
         ports:
         - containerPort: 8000
 
