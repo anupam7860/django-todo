@@ -1,7 +1,7 @@
 version : "3.3"
 services :
   web :
-    build : anupam7860/my-note-app:latest
+    build : anupam7860/myapp:latest
     ports :
          - "8000:8000"
 
