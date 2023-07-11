@@ -1,23 +1,24 @@
 apiVersion: apps/v1
-kind: Deployment # Kubernetes resource kind we are creating
+kind: Deployment
 metadata:
-  name: myapp
+  name: todo
+  labels:
+    app: myapp
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: myapp
-  replicas: 2 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
         app: myapp
     spec:
       containers:
-        - name: myapp
-          image: anupam7860/myapp # Image that will be used to containers in the cluster
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8000 # The port that the container is running on in the cluster
+      - name: myapp
+        image: anupam7860/myapp:latest
+        ports:
+        - containerPort: 8000
 
 
 ---
