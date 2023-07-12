@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: anupam7860/myapp
+        image: anupam7860/mapp
         ports:
         - containerPort: 8000
 
