@@ -1,60 +1,29 @@
 version: 0.2
 
 env:
-  #variables:
-     # key: "value"
-     # key: "value"
   parameter-store:
-     DOCKER_REGISTRY_USERNAME: "/django/docker-credentials/username"
-     DOCKER_REGISTRY_PASSWORD: "/django/docker-credentials/password"
-     DOCKER_REGISTRY_URL: "/django/docker-registry/url"
-  #secrets-manager:
-     # key: secret-id:json-key:version-stage:version-id
-     # key: secret-id:json-key:version-stage:version-id
-  #exported-variables:
-     # - variable
-     # - variable
-  #git-credential-helper: yes
-#batch:
-  #fast-fail: true
-  #build-list:
-  #build-matrix:
-  #build-graph:
+    DOCKER_REGISTRY_USERNAME: /django/docker-credentials/username
+    DOCKER_REGISTRY_PASSWORD: /django/docker-credentials/password
+    DOCKER_REGISTRY_URL: /django/docker-registry/url
 phases:
   install:
     runtime-versions:
-       python: 3.11
-      #commands:
-      # - command
-      # - command
+      python: 3.11
   pre_build:
     commands:
+      - echo "Installing dependencies..."
       - pip install django==3.2
-      # - command
   build:
     commands:
-       - echo "Building Docker Image"
-       - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/LatestTODO:latest"
-       - docker push <>
+      - echo "Running tests..."
+      - echo "Building Docker image..."
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest" .
+      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest"
   post_build:
-    #commands:
-       - echo "Build is Successful"
-      # - command
-#reports:
-  #report-name-or-arn:
-    #files:
-      # - location
-      # - location
-    #base-directory: location
-    #discard-paths: yes
-    #file-format: JunitXml | CucumberJson
+    commands:
+      - echo "Build completed successfully!"
 #artifacts:
-  #files:
-    # - location
-    # - location
-  #name: $(date +%Y-%m-%d)
-  #discard-paths: yes
-  #base-directory: location
-#cache:
-  #paths:
-    # - paths
+ # files:
+ #   - '**/*'
+  #base-directory: ../simple-python-app
