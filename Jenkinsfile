@@ -8,16 +8,7 @@ pipeline {
                 git url:"https://github.com/anupam7860/django-todo.git", branch: "develop"
             }
         }
-        stage('SCM') {
-    checkout scm
-  }
-  stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarScanner';
-    withSonarQubeEnv() {
-      sh "${scannerHome}/bin/sonar-scanner"
-    }
-  }
-   stage("Building Docker image"){
+        stage("Building Docker image"){
             steps {
                 echo "Building the image"
                 sh "docker build -t myapp ."
